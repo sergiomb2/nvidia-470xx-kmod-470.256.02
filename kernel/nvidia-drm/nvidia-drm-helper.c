@@ -182,23 +182,7 @@ free:
        }
     }
 
-#if defined(NV_DRM_ATOMIC_STATE_REF_COUNTING_PRESENT) || defined(NV_DRM_ATOMIC_COMMIT_STRUCT_PRESENT)
     nv_drm_atomic_state_base_put(state);
-#else
-    if (ret != 0) {
-        drm_atomic_state_free(state);
-    } else {
-        /*
-         * In case of success, drm_atomic_commit() takes care to cleanup and
-         * free @state.
-         *
-         * Comment placed above drm_atomic_commit() says: The caller must not
-         * free or in any other way access @state. If the function fails then
-         * the caller must clean up @state itself.
-         */
-    }
-#endif
-
     return ret;
 }
 

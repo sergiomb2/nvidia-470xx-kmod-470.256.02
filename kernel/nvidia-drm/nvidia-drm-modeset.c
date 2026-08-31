@@ -450,7 +450,6 @@ int nv_drm_atomic_commit(struct drm_device *dev,
         }
     }
 
-#if defined(NV_DRM_ATOMIC_HELPER_SWAP_STATE_HAS_STALL_ARG)
 
     /*
      * nv_drm_atomic_commit_internal()
@@ -462,18 +461,18 @@ int nv_drm_atomic_commit(struct drm_device *dev,
      * expected.
      */
 
-#if defined(NV_DRM_ATOMIC_HELPER_SWAP_STATE_RETURN_INT)
     ret = drm_atomic_helper_swap_state(state, false /* stall */);
     if (WARN_ON(ret != 0)) {
         return ret;
     }
-#else
-    drm_atomic_helper_swap_state(state, false /* stall */);
-#endif
 
-#else
-    drm_atomic_helper_swap_state(dev, state);
-#endif
+    /*
+     * Used to update legacy modeset state pointers to support UAPIs not updated
+     * by the core atomic modeset infrastructure.
+     *
+     * Example: /sys/class/drm/<card connector>/enabled
+     */
+    drm_atomic_helper_update_legacy_modeset_state(dev, state);
 
     /*
      * nv_drm_atomic_commit_internal() must not return failure after
@@ -576,14 +575,9 @@ int nv_drm_atomic_commit(struct drm_device *dev,
 
 done:
 
-#if defined(NV_DRM_ATOMIC_STATE_REF_COUNTING_PRESENT) || defined(NV_DRM_ATOMIC_COMMIT_STRUCT_PRESENT)
     /*
-     * If ref counting is present, state will be freed when the caller
-     * drops its reference after we return.
+     * State will be freed when the caller drops its reference after we return.
      */
-#else
-    drm_atomic_state_free(state);
-#endif
 
     return 0;
 }

@@ -3024,25 +3024,6 @@ compile_test() {
             compile_check_conftest "$CODE" "NV_DRM_MASTER_DROP_HAS_FROM_RELEASE_ARG" "" "types"
         ;;
 
-        drm_atomic_state_ref_counting)
-            #
-            # Determine if functions drm_atomic_state_get/put() are
-            # present.
-            #
-            # Added by commit 0853695c3ba4 ("drm: Add reference counting to
-            # drm_atomic_state") in v4.10 (2016-10-14)
-            #
-            CODE="
-            #if defined(NV_DRM_DRM_ATOMIC_H_PRESENT)
-            #include <drm/drm_atomic.h>
-            #endif
-            void conftest_drm_atomic_state_get(void) {
-                drm_atomic_state_get();
-            }"
-
-            compile_check_conftest "$CODE" "NV_DRM_ATOMIC_STATE_REF_COUNTING_PRESENT" "" "functions"
-        ;;
-
         vm_ops_fault_removed_vma_arg)
             #
             # Determine if vma.vm_ops.fault takes (vma, vmf), or just (vmf)
@@ -3682,56 +3663,6 @@ compile_test() {
             }"
 
             compile_check_conftest "$CODE" "NV_DRM_CONNECTOR_LIST_ITER_BEGIN_PRESENT" "" "functions"
-        ;;
-
-        drm_atomic_helper_swap_state_has_stall_arg)
-            #
-            # Determine if drm_atomic_helper_swap_state() has 'stall' argument.
-            #
-            # drm_atomic_helper_swap_state() function prototype updated to take
-            # 'state' and 'stall' arguments by commit
-            # 5e84c2690b805caeff3b4c6c9564c7b8de54742d (drm/atomic-helper:
-            # Massage swap_state signature somewhat)
-            # in v4.8 (2016-06-10).
-            #
-            CODE="
-            #include <linux/version.h>
-            #include <drm/drm_atomic_helper.h>
-            void conftest_drm_atomic_helper_swap_state_has_stall_arg(
-            #if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 2, 0)
-                    struct drm_atomic_commit *state,
-            #else
-                    struct drm_atomic_state *state,
-            #endif
-                    bool stall) {
-                (void)drm_atomic_helper_swap_state(state, stall);
-            }"
-
-            compile_check_conftest "$CODE" "NV_DRM_ATOMIC_HELPER_SWAP_STATE_HAS_STALL_ARG" | append_conftest "types"
-
-            #
-            # Determine if drm_atomic_helper_swap_state() returns int.
-            #
-            # drm_atomic_helper_swap_state() function prototype
-            # updated to return int by commit
-            # c066d2310ae9bbc695c06e9237f6ea741ec35e43 (drm/atomic: Change
-            # drm_atomic_helper_swap_state to return an error.) in v4.14
-            # (2017-07-11).
-            #
-            CODE="
-            #include <linux/version.h>
-            #include <drm/drm_atomic_helper.h>
-            int conftest_drm_atomic_helper_swap_state_return_int(
-            #if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 2, 0)
-                    struct drm_atomic_commit *state,
-            #else
-                    struct drm_atomic_state *state,
-            #endif
-                    bool stall) {
-                return drm_atomic_helper_swap_state(state, stall);
-            }"
-
-            compile_check_conftest "$CODE" "NV_DRM_ATOMIC_HELPER_SWAP_STATE_RETURN_INT" | append_conftest "types"
         ;;
 
         pm_runtime_available)
