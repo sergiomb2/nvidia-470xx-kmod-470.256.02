@@ -13,6 +13,7 @@
 #include "nv-reg.h"
 #include "nv-frontend.h"
 
+MODULE_DESCRIPTION("NVIDIA GPU frontend kernel module");
 #if defined(MODULE_LICENSE)
 
 

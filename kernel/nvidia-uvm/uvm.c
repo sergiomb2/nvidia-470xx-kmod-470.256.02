@@ -1129,6 +1129,7 @@ static void __exit uvm_exit_entry(void)
 module_init(uvm_init_entry);
 module_exit(uvm_exit_entry);
 
+MODULE_DESCRIPTION("NVIDIA GPU UVM kernel module");
 MODULE_LICENSE("Dual MIT/GPL");
 MODULE_INFO(supported, "external");
 
