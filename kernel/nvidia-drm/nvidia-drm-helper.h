@@ -260,6 +260,31 @@ int nv_drm_atomic_helper_disable_all(struct drm_device *dev,
     for_each_crtc_in_state(__state, crtc, crtc_state, __i)
 #endif
 
+#if !defined(for_each_new_crtc_in_state)
+#define nv_drm_for_each_new_crtc_in_state(__state, crtc, new_crtc_state, __i) \
+    nv_drm_for_each_crtc_in_state(__state, crtc, new_crtc_state, __i)
+#else
+#define nv_drm_for_each_new_crtc_in_state(__state, crtc, new_crtc_state, __i) \
+    for_each_new_crtc_in_state(__state, crtc, new_crtc_state, __i)
+#endif
+
+#if !defined(for_each_old_crtc_in_state)
+#define nv_drm_for_each_old_crtc_in_state(__state, crtc, old_crtc_state, __i) \
+    nv_drm_for_each_crtc_in_state(__state, crtc, old_crtc_state, __i)
+#else
+#define nv_drm_for_each_old_crtc_in_state(__state, crtc, old_crtc_state, __i) \
+    for_each_old_crtc_in_state(__state, crtc, old_crtc_state, __i)
+#endif
+
+#if !defined(for_each_oldnew_crtc_in_state)
+#define nv_drm_for_each_oldnew_crtc_in_state(__state, crtc, old_crtc_state, new_crtc_state, __i) \
+    nv_drm_for_each_crtc_in_state(__state, crtc, old_crtc_state, __i) \
+    (new_crtc_state) = (old_crtc_state);
+#else
+#define nv_drm_for_each_oldnew_crtc_in_state(__state, crtc, old_crtc_state, new_crtc_state, __i) \
+    for_each_oldnew_crtc_in_state(__state, crtc, old_crtc_state, new_crtc_state, __i)
+#endif
+
 /**
  * nv_drm_for_each_plane_in_state - iterate over all planes in an atomic update
  * @__state: &struct drm_atomic_state pointer

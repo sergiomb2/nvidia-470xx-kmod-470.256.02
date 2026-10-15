@@ -309,7 +309,7 @@ static int nv_drm_plane_atomic_check(struct drm_plane *plane,
         goto done;
     }
 
-    nv_drm_for_each_crtc_in_state(plane_state->state, crtc, crtc_state, i) {
+    nv_drm_for_each_new_crtc_in_state(plane_state->state, crtc, crtc_state, i) {
         struct nv_drm_crtc_state *nv_crtc_state = to_nv_crtc_state(crtc_state);
         struct NvKmsKapiHeadRequestedConfig *head_req_config =
             &nv_crtc_state->req_config;
