@@ -227,6 +227,14 @@ int nv_drm_atomic_helper_disable_all(struct drm_device *dev,
 #endif
 
 
+#if !defined(for_each_new_connector_in_state)
+#define nv_drm_for_each_new_connector_in_state(__state, connector, new_connector_state, __i) \
+    nv_drm_for_each_connector_in_state(__state, connector, new_connector_state, __i)
+#else
+#define nv_drm_for_each_new_connector_in_state(__state, connector, new_connector_state, __i) \
+    for_each_new_connector_in_state(__state, connector, new_connector_state, __i)
+#endif
+
 /**
  * nv_drm_for_each_crtc_in_state - iterate over all CRTCs in an atomic update
  * @__state: &struct drm_atomic_state pointer

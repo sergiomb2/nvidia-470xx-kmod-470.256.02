@@ -635,7 +635,7 @@ static int nv_drm_crtc_atomic_check(struct drm_crtc *crtc,
 
         req_config->flags.displaysChanged = NV_TRUE;
 
-        nv_drm_for_each_connector_in_state(crtc_state->state,
+        nv_drm_for_each_new_connector_in_state(crtc_state->state,
                                            connector, connector_state, j) {
             if (connector_state->crtc != crtc) {
                 continue;
