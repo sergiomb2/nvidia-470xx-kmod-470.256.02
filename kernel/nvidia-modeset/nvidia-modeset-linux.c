@@ -1167,7 +1167,7 @@ static void nvkms_kapi_event_kthread_q_callback(void *arg)
     nvKmsKapiHandleEventQueueChange(device);
 }
 
-struct nvkms_per_open *nvkms_open_common(enum NvKmsClientType type,
+static struct nvkms_per_open *nvkms_open_common(enum NvKmsClientType type,
                                          struct NvKmsKapiDevice *device,
                                          int *status)
 {
@@ -1282,6 +1282,7 @@ static void nvkms_close_popen(struct nvkms_per_open *popen)
     }
 }
 
+static
 int nvkms_ioctl_common
 (
     struct nvkms_per_open *popen,

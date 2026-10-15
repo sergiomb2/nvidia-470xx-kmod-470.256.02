@@ -177,7 +177,7 @@ static struct task_struct *thread_create_on_node(int (*threadfn)(void *data),
 {
 
     unsigned i, j;
-    const static unsigned attempts = 3;
+    static const unsigned attempts = 3;
     struct task_struct *thread[3];
 
     for (i = 0;; i++) {

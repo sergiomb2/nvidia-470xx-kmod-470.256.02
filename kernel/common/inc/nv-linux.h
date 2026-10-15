@@ -518,7 +518,9 @@ static inline void *nv_vmalloc(unsigned long size)
     void *ptr = __vmalloc(size, GFP_KERNEL);
 #endif
     if (ptr)
+    {
         NV_MEMDBG_ADD(ptr, size);
+    }
     return ptr;
 }
 
@@ -532,7 +534,9 @@ static inline void *nv_ioremap(NvU64 phys, NvU64 size)
 {
     void *ptr = ioremap(phys, size);
     if (ptr)
+    {
         NV_MEMDBG_ADD(ptr, size);
+    }
     return ptr;
 }
 
@@ -564,7 +568,9 @@ static inline void *nv_ioremap_cache(NvU64 phys, NvU64 size)
     //
     void *ptr = ioremap_prot(phys, size, pgprot_val(PAGE_KERNEL));
     if (ptr)
+    {
         NV_MEMDBG_ADD(ptr, size);
+    }
     return ptr;
 #else
     return nv_ioremap(phys, size);
@@ -576,7 +582,9 @@ static inline void *nv_ioremap_wc(NvU64 phys, NvU64 size)
 #if defined(NV_IOREMAP_WC_PRESENT)
     void *ptr = ioremap_wc(phys, size);
     if (ptr)
+    {
         NV_MEMDBG_ADD(ptr, size);
+    }
     return ptr;
 #else
     return nv_ioremap_nocache(phys, size);
@@ -663,7 +671,9 @@ static inline NvUPtr nv_vmap(struct page **pages, NvU32 page_count,
     /* All memory cached in PPC64LE; can't honor 'cached' input. */
     ptr = vmap(pages, page_count, VM_MAP, prot);
     if (ptr)
+    {
         NV_MEMDBG_ADD(ptr, page_count * PAGE_SIZE);
+    }
     return (NvUPtr)ptr;
 }
 

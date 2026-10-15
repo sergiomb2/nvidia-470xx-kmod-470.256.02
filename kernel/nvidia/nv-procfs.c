@@ -685,7 +685,7 @@ static nv_proc_ops_t nv_procfs_suspend_fops = {
 /*
  * Forwards error to nv_log_error which exposes data to vendor callback
  */
-void
+static void
 exercise_error_forwarding_va(
     nv_state_t *nv,
     NvU32 err,

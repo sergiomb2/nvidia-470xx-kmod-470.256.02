@@ -25,9 +25,9 @@
  * nv-ibmnpu.c - interface with the ibmnpu (IBM NVLink Processing Unit) "module"
  */
 #include "nv-linux.h"
+#include "nv-ibmnpu.h"
 
 #if defined(NVCPU_PPC64LE)
-#include "nv-ibmnpu.h"
 #include "nv-rsync.h"
 
 /*

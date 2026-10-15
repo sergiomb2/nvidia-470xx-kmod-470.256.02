@@ -1267,12 +1267,6 @@ NV_STATUS NV_API_CALL nv_get_current_irq_priv_data(nv_state_t *nv, NvU32 *priv_d
     return NV_OK;
 }
 
-NV_STATUS NV_API_CALL nv_get_num_dpaux_instances(nv_state_t *nv, NvU32 *num_instances)
-{
-    *num_instances = nv->num_dpaux_instance;
-    return NV_OK;
-}
-
 void NV_API_CALL
 nv_schedule_uvm_isr(nv_state_t *nv)
 {

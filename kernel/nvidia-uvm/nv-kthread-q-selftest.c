@@ -81,7 +81,7 @@
 #define NUM_Q_ITEMS_IN_MULTITHREAD_TEST (NUM_TEST_Q_ITEMS * NUM_TEST_KTHREADS)
 
 // This exists in order to have a function to place a breakpoint on:
-void on_nvq_assert(void)
+static void on_nvq_assert(void)
 {
     (void)NULL;
 }

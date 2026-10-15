@@ -245,7 +245,7 @@ static void nv_cap_procfs_exit(void)
     nv_cap_procfs_dir = NULL;
 }
 
-int nv_cap_procfs_init(void)
+static int nv_cap_procfs_init(void)
 {
     nv_cap_procfs_dir = NV_CREATE_PROC_DIR(NV_CAP_PROCFS_DIR, NULL);
     if (nv_cap_procfs_dir == NULL)
