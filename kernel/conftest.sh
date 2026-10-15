@@ -5120,6 +5120,30 @@ compile_test() {
             compile_check_conftest "$CODE" "NV_DRM_UNLOCKED_IOCTL_FLAG_PRESENT" "" "types"
         ;;
 
+        drm_driver_has_date)
+            #
+            # Determine if the 'drm_driver' structure has a 'date' field.
+            #
+            # Removed by commit cb2e1c2136f7 ("drm: remove driver date from
+            # struct drm_driver and all drivers") in linux-next, expected in
+            # v6.14.
+            #
+            CODE="
+            #if defined(NV_DRM_DRMP_H_PRESENT)
+            #include <drm/drmP.h>
+            #endif
+
+            #if defined(NV_DRM_DRM_DRV_H_PRESENT)
+            #include <drm/drm_drv.h>
+            #endif
+
+            int conftest_drm_driver_has_date(void) {
+                return offsetof(struct drm_driver, date);
+            }"
+
+            compile_check_conftest "$CODE" "NV_DRM_DRIVER_HAS_DATE" "" "types"
+        ;;
+
         # When adding a new conftest entry, please use the correct format for
         # specifying the relevant upstream Linux kernel commit.  Please
         # avoid specifying -rc kernels, and only use SHAs that actually exist
