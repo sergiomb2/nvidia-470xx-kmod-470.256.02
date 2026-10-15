@@ -39,6 +39,7 @@
 #include "uvm_pte_batch.h"
 #include "uvm_tlb_batch.h"
 #include "nv_uvm_interface.h"
+#include "nv_uvm_types.h"
 
 #include "uvm_pushbuffer.h"
 
@@ -101,11 +102,11 @@ static NV_STATUS uvm_pte_buffer_init(uvm_va_range_t *va_range,
 
     pte_buffer->va_range = va_range;
     pte_buffer->gpu = gpu;
-    pte_buffer->mapping_info.cachingType = map_rm_params->caching_type;
-    pte_buffer->mapping_info.mappingType = map_rm_params->mapping_type;
-    pte_buffer->mapping_info.formatType = map_rm_params->format_type;
-    pte_buffer->mapping_info.elementBits = map_rm_params->element_bits;
-    pte_buffer->mapping_info.compressionType = map_rm_params->compression_type;
+    pte_buffer->mapping_info.cachingType        = (UvmRmGpuCachingType) map_rm_params->caching_type;
+    pte_buffer->mapping_info.mappingType        = (UvmRmGpuMappingType) map_rm_params->mapping_type;
+    pte_buffer->mapping_info.formatType         = (UvmRmGpuFormatType) map_rm_params->format_type;
+    pte_buffer->mapping_info.elementBits        = (UvmRmGpuFormatElementBits) map_rm_params->element_bits;
+    pte_buffer->mapping_info.compressionType    = (UvmRmGpuCompressionType) map_rm_params->compression_type;
     pte_buffer->page_size = page_size;
     pte_buffer->pte_size = uvm_mmu_pte_size(tree, page_size);
     num_all_ptes = uvm_div_pow2_64(length, page_size);
