@@ -310,6 +310,22 @@ int nv_drm_atomic_helper_disable_all(struct drm_device *dev,
     for_each_plane_in_state(__state, plane, plane_state, __i)
 #endif
 
+#if !defined(for_each_new_plane_in_state)
+#define nv_drm_for_each_new_plane_in_state(__state, plane, new_plane_state, __i) \
+    nv_drm_for_each_plane_in_state(__state, plane, new_plane_state, __i)
+#else
+#define nv_drm_for_each_new_plane_in_state(__state, plane, new_plane_state, __i) \
+    for_each_new_plane_in_state(__state, plane, new_plane_state, __i)
+#endif
+
+#if !defined(for_each_old_plane_in_state)
+#define nv_drm_for_each_old_plane_in_state(__state, plane, old_plane_state, __i) \
+    nv_drm_for_each_plane_in_state(__state, plane, old_plane_state, __i)
+#else
+#define nv_drm_for_each_old_plane_in_state(__state, plane, old_plane_state, __i) \
+    for_each_old_plane_in_state(__state, plane, old_plane_state, __i)
+#endif
+
 static inline struct drm_crtc *nv_drm_crtc_find(struct drm_device *dev,
     uint32_t id)
 {

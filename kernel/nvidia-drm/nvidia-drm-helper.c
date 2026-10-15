@@ -154,7 +154,7 @@ int nv_drm_atomic_helper_disable_all(struct drm_device *dev,
             goto free;
     }
 
-    nv_drm_for_each_plane_in_state(state, plane, plane_state, i) {
+    nv_drm_for_each_new_plane_in_state(state, plane, plane_state, i) {
         ret = drm_atomic_set_crtc_for_plane(plane_state, NULL);
         if (ret < 0)
             goto free;

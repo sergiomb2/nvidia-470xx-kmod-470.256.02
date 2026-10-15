@@ -105,8 +105,11 @@ static bool __will_generate_flip_event(struct drm_crtc *crtc,
         return false;
     }
 
-    /* Find out whether primary & overlay flip done events will be generated. */
-    nv_drm_for_each_plane_in_state(old_crtc_state->state,
+    /*
+     * Find out whether primary & overlay flip done events will be generated.
+     * Only called after drm_atomic_helper_swap_state, so we use old state.
+     */
+    nv_drm_for_each_old_plane_in_state(old_crtc_state->state,
         plane, old_plane_state, i) {
         if (old_plane_state->crtc != crtc) {
            continue;
@@ -187,7 +190,8 @@ static int __nv_drm_get_syncpt_data(
 
     head_reply_config = &reply_config->headReplyConfig[nv_crtc->head];
 
-    nv_drm_for_each_plane_in_state(old_crtc_state->state, plane, old_plane_state, i) {
+    /* Use old state because this is only called after drm_atomic_helper_swap_state */
+    nv_drm_for_each_old_plane_in_state(old_crtc_state->state, plane, old_plane_state, i) {
 
         if (plane->type == DRM_PLANE_TYPE_CURSOR || old_plane_state->crtc != crtc) {
             continue;
