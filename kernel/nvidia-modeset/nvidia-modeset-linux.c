@@ -39,6 +39,7 @@
 #include "nv-kthread-q.h"
 
 #include "nv-time.h"
+#include "nv-timer.h"
 
 #include <linux/sched.h>
 #if defined(NV_LINUX_SCHED_SIGNAL_H_PRESENT)
@@ -718,7 +719,7 @@ static void nvkms_kthread_q_callback(void *arg)
      * pending timers and than waiting for workqueue callbacks.
      */
     if (timer->kernel_timer_created) {
-        del_timer_sync(&timer->kernel_timer);
+        nv_timer_delete_sync(&timer->kernel_timer);
     }
 
     /*
@@ -1749,7 +1750,11 @@ restart:
              * completion, and we wait for queue completion with
              * nv_kthread_q_stop below.
              */
+#if !defined(NV_BSD) && NV_IS_EXPORT_SYMBOL_PRESENT_timer_delete_sync
+            if (timer_delete_sync(&timer->kernel_timer) == 1) {
+#else
             if (del_timer_sync(&timer->kernel_timer) == 1) {
+#endif
                 /*  We've deactivated timer so we need to clean after it */
                 list_del(&timer->timers_list);
 

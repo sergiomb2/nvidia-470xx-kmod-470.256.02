@@ -188,6 +188,7 @@ NV_CONFTEST_SYMBOL_COMPILE_TESTS += is_export_symbol_present_get_dram_num_channe
 NV_CONFTEST_SYMBOL_COMPILE_TESTS += is_export_symbol_present_tegra_dram_types
 NV_CONFTEST_SYMBOL_COMPILE_TESTS += is_export_symbol_present_screen_info
 NV_CONFTEST_SYMBOL_COMPILE_TESTS += is_export_symbol_gpl_screen_info
+NV_CONFTEST_SYMBOL_COMPILE_TESTS += is_export_symbol_present_timer_delete_sync
 
 NV_CONFTEST_TYPE_COMPILE_TESTS += acpi_op_remove
 NV_CONFTEST_TYPE_COMPILE_TESTS += file_operations
