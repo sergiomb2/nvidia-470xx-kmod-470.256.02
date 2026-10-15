@@ -86,7 +86,6 @@ plane_req_config_update(struct drm_plane *plane,
     struct nv_drm_device *nv_dev = to_nv_device(plane->dev);
     struct nv_drm_plane_state *nv_drm_plane_state =
         to_nv_drm_plane_state(plane_state);
-    int ret = 0;
 
     if (plane_state->fb == NULL) {
         plane_req_config_disable(req_config);
