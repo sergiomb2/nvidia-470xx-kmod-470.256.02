@@ -1659,7 +1659,7 @@ static bool fault_check_range_permission(uvm_va_range_t *va_range, uvm_fault_acc
 
 NV_STATUS uvm_va_range_check_logical_permissions(uvm_va_range_t *va_range,
                                                  uvm_processor_id_t processor_id,
-                                                 uvm_fault_type_t access_type,
+                                                 uvm_fault_access_type_t access_type,
                                                  bool allow_migration)
 {
     // CPU permissions are checked later by block_map_cpu_page.

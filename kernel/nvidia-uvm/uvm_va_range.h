@@ -891,7 +891,7 @@ uvm_prot_t uvm_va_range_logical_prot(uvm_va_range_t *va_range);
 //                              by UvmPreventMigrationRangeGroups.
 NV_STATUS uvm_va_range_check_logical_permissions(uvm_va_range_t *va_range,
                                                  uvm_processor_id_t processor_id,
-                                                 uvm_fault_type_t access_type,
+                                                 uvm_fault_access_type_t access_type,
                                                  bool allow_migration);
 
 static bool uvm_va_range_is_read_duplicate(uvm_va_range_t *va_range)
