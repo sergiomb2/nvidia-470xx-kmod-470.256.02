@@ -1774,6 +1774,7 @@ uvm_gpu_t *uvm_gpu_get_by_uuid(const NvProcessorUuid *gpu_uuid)
     return uvm_gpu_get_by_uuid_locked(gpu_uuid);
 }
 
+static
 uvm_gpu_t *uvm_gpu_get_by_uuid_and_swizz_id_locked(const NvProcessorUuid *gpu_uuid, NvU32 swizz_id)
 {
     uvm_parent_gpu_t *parent_gpu = uvm_parent_gpu_get_by_uuid(gpu_uuid);
