@@ -58,6 +58,16 @@ else
     )
   endif
 
+  KERNEL_ARCH = $(ARCH)
+
+  ifneq ($(filter $(ARCH),i386 x86_64),)
+    KERNEL_ARCH = x86
+  else
+    ifeq ($(filter $(ARCH),arm64 powerpc),)
+        $(error Unsupported architecture $(ARCH))
+    endif
+  endif
+
   NV_KERNEL_MODULES ?= $(wildcard nvidia nvidia-uvm nvidia-vgpu-vfio nvidia-modeset nvidia-drm nvidia-peermem)
   NV_KERNEL_MODULES := $(filter-out $(NV_EXCLUDE_KERNEL_MODULES), \
                                     $(NV_KERNEL_MODULES))
@@ -97,8 +107,9 @@ else
   # module symbols on which the Linux kernel's module resolution is dependent
   # and hence must be used whenever present.
 
-  LD_SCRIPT ?= $(KERNEL_SOURCES)/scripts/module-common.lds      \
-               $(KERNEL_SOURCES)/arch/$(ARCH)/kernel/module.lds \
+  LD_SCRIPT ?= $(KERNEL_SOURCES)/scripts/module-common.lds             \
+               $(KERNEL_SOURCES)/arch/$(KERNEL_ARCH)/kernel/module.lds \
+               $(KERNEL_OUTPUT)/arch/$(KERNEL_ARCH)/module.lds         \
                $(KERNEL_OUTPUT)/scripts/module.lds
   NV_MODULE_COMMON_SCRIPTS := $(foreach s, $(wildcard $(LD_SCRIPT)), -T $(s))
 
