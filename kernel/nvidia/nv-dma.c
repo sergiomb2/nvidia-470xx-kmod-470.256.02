@@ -764,7 +764,11 @@ static NvBool nv_dma_is_map_resource_implemented
 #endif
     }
 
+#if defined(NV_DMA_MAP_OPS_HAS_MAP_PHYS)
+    return (ops->map_phys != NULL);
+#else
     return (ops->map_resource != NULL);
+#endif
 #else
     return NV_FALSE;
 #endif
