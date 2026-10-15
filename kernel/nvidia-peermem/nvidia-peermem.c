@@ -465,6 +465,7 @@ static int __init nv_mem_client_init(void)
 
     return 0;
 #else
+    peer_err("module compiled without IB peer memory symbols present\n");
     return -EINVAL;
 #endif
 }
