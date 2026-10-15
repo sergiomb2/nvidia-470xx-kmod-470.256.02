@@ -125,3 +125,4 @@ NV_CONFTEST_TYPE_COMPILE_TESTS += drm_unlocked_ioctl_flag_present
 NV_CONFTEST_TYPE_COMPILE_TESTS += drm_output_poll_changed
 NV_CONFTEST_TYPE_COMPILE_TESTS += drm_driver_has_date
 NV_CONFTEST_TYPE_COMPILE_TESTS += file_operations_fop_unsigned_offset_present
+NV_CONFTEST_TYPE_COMPILE_TESTS += drm_connector_helper_funcs_mode_valid_has_const_mode_arg
