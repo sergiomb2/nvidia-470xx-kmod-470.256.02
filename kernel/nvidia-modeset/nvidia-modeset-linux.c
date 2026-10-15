@@ -8,6 +8,7 @@
  * _NVRM_COPYRIGHT_END_
  */
 
+#include <linux/version.h>
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/slab.h>
@@ -389,7 +390,11 @@ int nvkms_strcmp(const char *s1, const char *s2)
 
 char* nvkms_strncpy(char *dest, const char *src, size_t n)
 {
+#if LINUX_VERSION_CODE < KERNEL_VERSION(7,2,0)
     return strncpy(dest, src, n);
+#else
+    return memcpy(dest, src, n);
+#endif
 }
 
 void nvkms_usleep(NvU64 usec)
