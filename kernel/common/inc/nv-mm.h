@@ -245,26 +245,27 @@ static inline struct rw_semaphore *nv_mmap_get_lock(struct mm_struct *mm)
 #endif
 }
 
-#if defined(NV_VM_AREA_STRUCT_HAS_CONST_VM_FLAGS)
+#include <linux/version.h>
+#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 0, 0)
+typedef unsigned long vm_flags_t;
+#endif
+
 static inline void nv_vm_flags_set(struct vm_area_struct *vma, vm_flags_t flags)
 {
+#if defined(NV_VM_AREA_STRUCT_HAS_CONST_VM_FLAGS)
     vm_flags_set(vma, flags);
+#else
+    vma->vm_flags |= flags;
+#endif
 }
 
 static inline void nv_vm_flags_clear(struct vm_area_struct *vma, vm_flags_t flags)
 {
+#if defined(NV_VM_AREA_STRUCT_HAS_CONST_VM_FLAGS)
     vm_flags_clear(vma, flags);
-}
 #else
-static inline void nv_vm_flags_set(struct vm_area_struct *vma, unsigned long flags)
-{
-    vma->vm_flags |= flags;
-}
-
-static inline void nv_vm_flags_clear(struct vm_area_struct *vma, unsigned long flags)
-{
     vma->vm_flags &= ~flags;
-}
 #endif
+}
 
 #endif // __NV_MM_H__
