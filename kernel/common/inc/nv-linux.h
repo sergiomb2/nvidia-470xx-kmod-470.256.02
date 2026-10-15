@@ -1987,6 +1987,39 @@ static inline NvU32 nv_default_irq_flags(nv_state_t *nv)
     #define NV_SET_CLOSE_ON_EXEC(fd, fdt) __set_bit(fd, fdt->close_on_exec)
 #endif
 
+#if (!defined(CONFIG_HAVE_ARCH_PFN_VALID)) && \
+        ((LINUX_VERSION_CODE == KERNEL_VERSION(6,7,3)) || \
+         (LINUX_VERSION_CODE == KERNEL_VERSION(6,6,15)) || \
+         (LINUX_VERSION_CODE == KERNEL_VERSION(6,1,76)) || \
+	 ((LINUX_VERSION_CODE >= KERNEL_VERSION(5,10,210)) && (LINUX_VERSION_CODE < KERNEL_VERSION(5,11,0))))
+
+/* Linux v6.8-rc3 pfn_valid version without GPL rcu_read_lock/unlock() */
+static inline int nv_pfn_valid(unsigned long pfn)
+{
+        struct mem_section *ms;
+        int ret;
+
+        if (PHYS_PFN(PFN_PHYS(pfn)) != pfn)
+                return 0;
+
+        if (pfn_to_section_nr(pfn) >= NR_MEM_SECTIONS)
+                return 0;
+        ms = __pfn_to_section(pfn);
+        rcu_read_lock_sched();
+        if (!valid_section(ms)) {
+                rcu_read_unlock_sched();
+                return 0;
+        }
+        ret = early_section(ms) || pfn_section_valid(ms, pfn);
+        rcu_read_unlock_sched();
+
+        return ret;
+}
+
+#else
+#  define nv_pfn_valid pfn_valid
+#endif
+
 #define MODULE_BASE_NAME "nvidia"
 #define MODULE_INSTANCE_NUMBER 0
 #define MODULE_INSTANCE_STRING ""
