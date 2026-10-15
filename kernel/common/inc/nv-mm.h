@@ -245,6 +245,19 @@ static inline struct rw_semaphore *nv_mmap_get_lock(struct mm_struct *mm)
 #endif
 }
 
+#if NV_IS_EXPORT_SYMBOL_GPL___vma_start_write
+#define NV_CAN_CALL_VMA_START_WRITE 0
+#else // NV_IS_EXPORT_SYMBOL_GPL___vma_start_write
+#define NV_CAN_CALL_VMA_START_WRITE 1
+#endif
+
+#if !NV_CAN_CALL_VMA_START_WRITE
+/*
+ * Commit 45ad9f5290dc updated vma_start_write() to call __vma_start_write().
+ */
+void nv_vma_start_write(struct vm_area_struct *);
+#endif
+
 #include <linux/version.h>
 #if LINUX_VERSION_CODE < KERNEL_VERSION(3, 0, 0)
 typedef unsigned long vm_flags_t;
@@ -252,7 +265,10 @@ typedef unsigned long vm_flags_t;
 
 static inline void nv_vm_flags_set(struct vm_area_struct *vma, vm_flags_t flags)
 {
-#if defined(NV_VM_AREA_STRUCT_HAS_CONST_VM_FLAGS)
+#if !NV_CAN_CALL_VMA_START_WRITE
+    nv_vma_start_write(vma);
+    ACCESS_PRIVATE(vma, __vm_flags) |= flags;
+#elif defined(NV_VM_AREA_STRUCT_HAS_CONST_VM_FLAGS)
     vm_flags_set(vma, flags);
 #else
     vma->vm_flags |= flags;
@@ -261,7 +277,10 @@ static inline void nv_vm_flags_set(struct vm_area_struct *vma, vm_flags_t flags)
 
 static inline void nv_vm_flags_clear(struct vm_area_struct *vma, vm_flags_t flags)
 {
-#if defined(NV_VM_AREA_STRUCT_HAS_CONST_VM_FLAGS)
+#if !NV_CAN_CALL_VMA_START_WRITE
+    nv_vma_start_write(vma);
+    ACCESS_PRIVATE(vma, __vm_flags) &= ~flags;
+#elif defined(NV_VM_AREA_STRUCT_HAS_CONST_VM_FLAGS)
     vm_flags_clear(vma, flags);
 #else
     vma->vm_flags &= ~flags;
