@@ -3695,9 +3695,14 @@ compile_test() {
             # in v4.8 (2016-06-10).
             #
             CODE="
+            #include <linux/version.h>
             #include <drm/drm_atomic_helper.h>
             void conftest_drm_atomic_helper_swap_state_has_stall_arg(
+            #if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 2, 0)
+                    struct drm_atomic_commit *state,
+            #else
                     struct drm_atomic_state *state,
+            #endif
                     bool stall) {
                 (void)drm_atomic_helper_swap_state(state, stall);
             }"
@@ -3714,9 +3719,14 @@ compile_test() {
             # (2017-07-11).
             #
             CODE="
+            #include <linux/version.h>
             #include <drm/drm_atomic_helper.h>
             int conftest_drm_atomic_helper_swap_state_return_int(
+            #if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 2, 0)
+                    struct drm_atomic_commit *state,
+            #else
                     struct drm_atomic_state *state,
+            #endif
                     bool stall) {
                 return drm_atomic_helper_swap_state(state, stall);
             }"
@@ -5254,6 +5264,22 @@ compile_test() {
             }"
 
             compile_check_conftest "$CODE" "NV_IS_VMA_WRITE_LOCKED_HAS_MM_LOCK_SEQ_ARG" "" "types"
+        ;;
+
+        drm_atomic_commit_struct_present)
+            #
+            # Determine if 'struct drm_atomic_state' has been renamed to
+            # 'struct drm_atomic_commit'.
+            #
+            # Renamed by commit 5164f7e7ff8e ("drm: Rename struct
+            # drm_atomic_state to drm_atomic_commit"), expected in Linux v7.2.
+            #
+            CODE="
+            #include <drm/drm_atomic.h>
+
+            struct drm_atomic_commit state;"
+
+            compile_check_conftest "$CODE" "NV_DRM_ATOMIC_COMMIT_STRUCT_PRESENT" "" "types"
         ;;
 
         # When adding a new conftest entry, please use the correct format for
