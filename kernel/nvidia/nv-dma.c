@@ -960,6 +960,7 @@ void NV_API_CALL nv_dma_enable_nvlink
 
 #if defined(NV_DRM_AVAILABLE) && defined(NV_DRM_DRM_GEM_H_PRESENT)
 
+#undef IMPORT_SGT_STUBS_NEEDED
 #define IMPORT_SGT_STUBS_NEEDED 0
 
 /*

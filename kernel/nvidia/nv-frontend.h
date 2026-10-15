@@ -32,4 +32,7 @@ int nvidia_frontend_remove_device(nvidia_module_t *, nv_linux_state_t *);
 
 extern nvidia_module_t *nv_minor_num_table[];
 
+int nvidia_init_module(void);
+void nvidia_exit_module(void);
+
 #endif

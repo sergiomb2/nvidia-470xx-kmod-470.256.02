@@ -3658,6 +3658,7 @@ NvBool NV_API_CALL nv_is_rm_firmware_active(
     return NV_FALSE;
 }
 
+static
 const char *nv_firmware_path(
     nv_firmware_t fw_type
 )

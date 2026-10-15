@@ -39,8 +39,6 @@ struct semaphore nv_module_table_lock;
 // minor number table
 nvidia_module_t *nv_minor_num_table[NV_FRONTEND_CONTROL_DEVICE_MINOR_MAX + 1];
 
-int nvidia_init_module(void);
-void nvidia_exit_module(void);
 
 /* EXPORTS to Linux Kernel */
 

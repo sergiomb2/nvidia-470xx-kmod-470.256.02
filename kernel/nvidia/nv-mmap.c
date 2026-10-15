@@ -349,6 +349,7 @@ int nv_encode_caching(
             if (NV_ALLOW_CACHING(memory_type))
                 break;
             // Intentional fallthrough.
+            __attribute__((__fallthrough__));
         default:
             nv_printf(NV_DBG_ERRORS,
                 "NVRM: VM: cache type %d not supported for memory type %d!\n",

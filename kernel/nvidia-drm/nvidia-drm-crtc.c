@@ -367,8 +367,10 @@ static int nv_drm_plane_atomic_set_property(
     uint64_t val)
 {
     struct nv_drm_device *nv_dev = to_nv_device(plane->dev);
+#if defined(NV_LINUX_NVHOST_H_PRESENT) && defined(CONFIG_TEGRA_GRHOST)
     struct nv_drm_plane_state *nv_drm_plane_state =
         to_nv_drm_plane_state(state);
+#endif
 
     if (property == nv_dev->nv_out_fence_property) {
 #if defined(NV_LINUX_NVHOST_H_PRESENT) && defined(CONFIG_TEGRA_GRHOST)

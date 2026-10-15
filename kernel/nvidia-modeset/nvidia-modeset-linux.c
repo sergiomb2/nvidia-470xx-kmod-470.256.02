@@ -1219,6 +1219,7 @@ failed:
     return NULL;
 }
 
+static
 void nvkms_close_common(struct nvkms_per_open *popen)
 {
     /*

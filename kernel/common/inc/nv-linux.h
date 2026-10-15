@@ -550,7 +550,9 @@ static inline void *nv_ioremap_cache(NvU64 phys, NvU64 size)
 #if defined(NV_IOREMAP_CACHE_PRESENT)
     void *ptr = ioremap_cache(phys, size);
     if (ptr)
+    {
         NV_MEMDBG_ADD(ptr, size);
+    }
     return ptr;
 #elif defined(NVCPU_PPC64LE)
     //
@@ -612,14 +614,18 @@ static NvBool nv_numa_node_has_memory(int node_id)
     { \
         (ptr) = kmalloc(size, NV_GFP_KERNEL); \
         if (ptr) \
+        { \
             NV_MEMDBG_ADD(ptr, size); \
+        } \
     }
 
 #define NV_KMALLOC_ATOMIC(ptr, size) \
     { \
         (ptr) = kmalloc(size, NV_GFP_ATOMIC); \
         if (ptr) \
+        { \
             NV_MEMDBG_ADD(ptr, size); \
+        } \
     }
 
 #if defined(__GFP_RETRY_MAYFAIL)
@@ -634,7 +640,9 @@ static NvBool nv_numa_node_has_memory(int node_id)
     { \
         (ptr) = kmalloc(size, NV_GFP_NO_OOM); \
         if (ptr) \
+        { \
             NV_MEMDBG_ADD(ptr, size); \
+        } \
     }
 
 #define NV_KFREE(ptr, size) \
