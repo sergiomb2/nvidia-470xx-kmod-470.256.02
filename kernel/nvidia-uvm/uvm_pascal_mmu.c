@@ -171,7 +171,7 @@ static NvLength entry_size_pascal(NvU32 depth)
 
 static NvU32 index_bits_pascal(NvU32 depth, NvU32 page_size)
 {
-    const static NvU32 bit_widths[] = {2, 9, 9, 8};
+    static const NvU32 bit_widths[] = {2, 9, 9, 8};
     // some code paths keep on querying this until they get a 0, meaning only the page offset remains.
     UVM_ASSERT(depth < 5);
     if (depth < 4) {
