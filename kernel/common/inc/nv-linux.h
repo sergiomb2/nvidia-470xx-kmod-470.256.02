@@ -2016,6 +2016,11 @@ static inline int nv_pfn_valid(unsigned long pfn)
         return ret;
 }
 
+#if defined(NVCPU_PPC64LE)
+// let the virt_addr_valid() macro use nv_pfn_valid()
+#define pfn_valid nv_pfn_valid
+#endif
+
 #else
 #  define nv_pfn_valid pfn_valid
 #endif
