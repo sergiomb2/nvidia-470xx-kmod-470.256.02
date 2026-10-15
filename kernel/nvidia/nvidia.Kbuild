@@ -168,6 +168,8 @@ NV_CONFTEST_FUNCTION_COMPILE_TESTS += set_close_on_exec
 NV_CONFTEST_FUNCTION_COMPILE_TESTS += dma_set_coherent_mask
 NV_CONFTEST_FUNCTION_COMPILE_TESTS += acpi_bus_get_device
 NV_CONFTEST_FUNCTION_COMPILE_TESTS += get_task_ioprio
+NV_CONFTEST_FUNCTION_COMPILE_TESTS += vma_flags_set_word
+NV_CONFTEST_FUNCTION_COMPILE_TESTS += vm_flags_set
 
 NV_CONFTEST_SYMBOL_COMPILE_TESTS += is_export_symbol_gpl_of_node_to_nid
 NV_CONFTEST_SYMBOL_COMPILE_TESTS += is_export_symbol_gpl_sme_active
@@ -217,7 +219,6 @@ NV_CONFTEST_TYPE_COMPILE_TESTS += acpi_fadt_low_power_s0
 NV_CONFTEST_TYPE_COMPILE_TESTS += mm_has_mmap_lock
 NV_CONFTEST_TYPE_COMPILE_TESTS += pci_channel_state
 NV_CONFTEST_TYPE_COMPILE_TESTS += num_registered_fb
-NV_CONFTEST_TYPE_COMPILE_TESTS += vm_area_struct_has_const_vm_flags
 
 NV_CONFTEST_GENERIC_COMPILE_TESTS += dom0_kernel_present
 NV_CONFTEST_GENERIC_COMPILE_TESTS += nvidia_vgpu_kvm_build

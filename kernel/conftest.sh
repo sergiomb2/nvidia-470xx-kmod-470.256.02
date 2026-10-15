@@ -5053,22 +5053,39 @@ compile_test() {
             compile_check_conftest "$CODE" "NV_DRM_CONNECTOR_HAS_OVERRIDE_EDID" "" "types"
         ;;
 
-        vm_area_struct_has_const_vm_flags)
+        vm_flags_set)
             #
-            # Determine if the 'vm_area_struct' structure has
-            # const 'vm_flags'.
+            # Determine if the vm_flags_set() function is present. The
+            # presence of this function indicates that the vm_flags_clear()
+            # function is also present.
             #
-            # A union of '__vm_flags' and 'const vm_flags' was added by
+            # The functions vm_flags_set()/ vm_flags_clear() were added by
             # commit bc292ab00f6c ("mm: introduce vma->vm_flags wrapper
-            # functions") in v6.3.
+            # functions") in v6.3-rc1 (2023-02-09).
             #
             CODE="
-            #include <linux/mm_types.h>
-            int conftest_vm_area_struct_has_const_vm_flags(void) {
-                return offsetof(struct vm_area_struct, __vm_flags);
+            #include <linux/mm.h>
+            void conftest_vm_flags_set(void) {
+                vm_flags_set();
             }"
 
-            compile_check_conftest "$CODE" "NV_VM_AREA_STRUCT_HAS_CONST_VM_FLAGS" "" "types"
+            compile_check_conftest "$CODE" "NV_VM_FLAGS_SET_PRESENT" "" "functions"
+        ;;
+
+        vma_flags_set_word)
+            #
+            # Determine if the vma_flags_set_word() function is present.
+            #
+            # Added by commit c3f7c506e8f1 ("mm: introduce VMA flags bitmap type")
+            # in v6.19-rc1.
+            #
+            CODE="
+            #include <linux/mm.h>
+            void conftest_vma_flags_set_word(void) {
+                vma_flags_set_word();
+            }"
+
+            compile_check_conftest "$CODE" "NV_VMA_FLAGS_SET_WORD_PRESENT" "" "functions"
         ;;
 
         drm_driver_has_dumb_destroy)
