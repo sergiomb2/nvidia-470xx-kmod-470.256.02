@@ -743,6 +743,13 @@ int __init nvidia_init_module(void)
     nvidia_stack_t *sp = NULL;
     NvU32 allow_no_gpu_init = 0;
 
+#ifdef CONFIG_X86_KERNEL_IBT
+    if (cpu_feature_enabled(X86_FEATURE_IBT)) {
+        printk(KERN_ERR "NVRM: This NVIDIA driver version is incompatible with IBT. Try booting with ibt=off.");
+        return -EINVAL;
+    }
+#endif
+
     nv_memdbg_init();
 
     rc = nv_procfs_init();
