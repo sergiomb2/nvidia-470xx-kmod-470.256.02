@@ -220,6 +220,7 @@ NV_CONFTEST_TYPE_COMPILE_TESTS += acpi_fadt_low_power_s0
 NV_CONFTEST_TYPE_COMPILE_TESTS += mm_has_mmap_lock
 NV_CONFTEST_TYPE_COMPILE_TESTS += pci_channel_state
 NV_CONFTEST_TYPE_COMPILE_TESTS += num_registered_fb
+NV_CONFTEST_TYPE_COMPILE_TESTS += is_vma_write_locked_has_mm_lock_seq_arg
 
 NV_CONFTEST_GENERIC_COMPILE_TESTS += dom0_kernel_present
 NV_CONFTEST_GENERIC_COMPILE_TESTS += nvidia_vgpu_kvm_build
