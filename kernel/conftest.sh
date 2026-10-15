@@ -3449,6 +3449,25 @@ compile_test() {
             compile_check_conftest "$CODE" "NV_DMA_BUF_OWNER_PRESENT" "" "types"
         ;;
 
+        drm_fb_create_takes_format_info)
+            #
+            # Determine if a `struct drm_format_info *` is passed into
+            # the .fb_create callback. If so, it will have 4 arguments.
+            # This parameter was added in commit 81112eaac559 ("drm:
+            # Pass the format info to .fb_create") in linux-next
+            # (2025-07-16)
+            CODE="
+            #include <drm/drm_mode_config.h>
+            #include <drm/drm_framebuffer.h>
+
+            static const struct drm_mode_config_funcs funcs;
+            void conftest_drm_fb_create_takes_format_info(void) {
+                funcs.fb_create(NULL, NULL, NULL, NULL); 
+            }"
+
+            compile_check_conftest "$CODE" "NV_DRM_FB_CREATE_TAKES_FORMAT_INFO" "" "types"
+        ;;
+
         drm_connector_funcs_have_mode_in_name)
             #
             # Determine if _mode_ is present in connector function names.  We
