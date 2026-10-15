@@ -17,10 +17,10 @@ static inline int nv_follow_pfn(struct vm_area_struct *vma,
                                 unsigned long address,
                                 unsigned long *pfn)
 {
-#if defined(NV_UNSAFE_FOLLOW_PFN_PRESENT)
-    return unsafe_follow_pfn(vma, address, pfn);
-#else
+#if defined(NV_FOLLOW_PFN_PRESENT)
     return follow_pfn(vma, address, pfn);
+#else
+    return -1;
 #endif
 }
 
