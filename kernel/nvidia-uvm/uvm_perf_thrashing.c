@@ -319,7 +319,7 @@ module_param(uvm_perf_thrashing_max_resets,    uint, S_IRUGO);
 unsigned uvm_perf_map_remote_on_native_atomics_fault = 0;
 module_param(uvm_perf_map_remote_on_native_atomics_fault, uint, S_IRUGO);
 
-// Global post-processed values of the module parameters. They can be overriden
+// Global post-processed values of the module parameters. They can be overridden
 // per VA-space.
 static bool g_uvm_perf_thrashing_enable;
 static unsigned g_uvm_perf_thrashing_threshold;
@@ -563,7 +563,7 @@ static void va_space_thrashing_info_init_params(va_space_thrashing_info_t *va_sp
     va_space_thrashing->params.threshold     = g_uvm_perf_thrashing_threshold;
     va_space_thrashing->params.pin_threshold = g_uvm_perf_thrashing_pin_threshold;
 
-    // Default thrashing parameters are overriden for simulated/emulated GPUs
+    // Default thrashing parameters are overridden for simulated/emulated GPUs
     if (g_uvm_global.num_simulated_devices > 0 &&
         (g_uvm_perf_thrashing_lapse_usec == UVM_PERF_THRASHING_LAPSE_USEC_DEFAULT)) {
         va_space_thrashing->params.lapse_ns  = UVM_PERF_THRASHING_LAPSE_USEC_DEFAULT_EMULATION * 1000;

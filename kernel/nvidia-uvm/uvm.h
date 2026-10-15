@@ -1201,7 +1201,7 @@ NV_STATUS UvmCleanUpZombieResources(void);
 // non-fault-capable HW engines.
 //
 // By default, all mappings to this VA range have read, write and atomic access
-// and are uncached. This behavior can be overriden for GPUs by explicitly
+// and are uncached. This behavior can be overridden for GPUs by explicitly
 // specifying the mapping and caching attributes through this API. At most one
 // GPU may cache the allocation, in which case no other processor should write
 // to it. These GPUs must have been registered via UvmRegisterGpu. These GPUs

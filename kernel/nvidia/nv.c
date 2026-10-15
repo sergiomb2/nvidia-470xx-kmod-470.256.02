@@ -4531,7 +4531,7 @@ NvU64 NV_API_CALL nv_get_dma_start_address(
      * Otherwise, the DMA start address only needs to be set once, and it
      * won't change afterward. Just return the cached value if asked again,
      * to avoid the kernel printing redundant messages to the kernel
-     * log when we call pci_set_dma_mask().
+     * log when we call dma_set_mask().
      */
     if ((nv_tce_bypass_mode == NV_TCE_BYPASS_MODE_DISABLE) ||
         (nvl->tce_bypass_enabled))
