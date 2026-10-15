@@ -25,6 +25,7 @@
 #include "uvm_gpu.h"
 #include "uvm_hal.h"
 #include "uvm_tools.h"
+#include "uvm_tools_init.h"
 #include "uvm_va_space.h"
 #include "uvm_api.h"
 #include "uvm_hal_types.h"

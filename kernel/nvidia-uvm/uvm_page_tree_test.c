@@ -1450,7 +1450,7 @@ static uvm_mmu_page_table_alloc_t fake_table_alloc(uvm_aperture_t aperture, NvU6
 // Queries the supported page sizes of the GPU(uvm_gpu_t) and fills the
 // page_sizes array up to MAX_NUM_PAGE_SIZE. Returns the number of elements in
 // page_sizes;
-size_t get_page_sizes(uvm_gpu_t *gpu, NvU32 *page_sizes)
+static size_t get_page_sizes(uvm_gpu_t *gpu, NvU32 *page_sizes)
 {
     unsigned long page_size_log2;
     unsigned long page_sizes_bitvec;
